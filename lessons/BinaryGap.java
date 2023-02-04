@@ -27,6 +27,8 @@
 
 package lessons;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 
 public class BinaryGap {
@@ -41,31 +43,10 @@ public class BinaryGap {
 	}
 
 	private static class Solution {
-
 		public int solution(int n) {
-			String bits = Integer.toBinaryString(n);
-			int firstIndex1 = bits.indexOf('1');
-			int lastIndex1 = bits.lastIndexOf('1');
-
-			if (firstIndex1 == -1)
-				return 0;
-
-			int maxBinaryGap = 0;
-			int currentBinaryGap = 0;
-
-			bits = bits.substring(firstIndex1, lastIndex1 + 1);
-
-			for (char b : bits.toCharArray()) {
-				if (b != '0') {
-					maxBinaryGap = Math.max(maxBinaryGap, currentBinaryGap);
-					currentBinaryGap = 0;
-				} else
-					currentBinaryGap++;
-			}
-
-			return maxBinaryGap;
+			String[] tokens = Integer.toBinaryString(n).replace("0", " ").trim().split("1");
+			return Arrays.stream(tokens).map(String::length).max(Comparator.naturalOrder()).orElse(0);
 		}
-
 	}
 
 }
